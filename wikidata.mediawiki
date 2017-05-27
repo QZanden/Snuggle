@@ -74,7 +74,7 @@ talk_threads:
     - deletion notification
     - csd notification
     - articles for creation
-    - teahouse invitation
+    - project chat invitation
     - welcome message
   traces:
     block: #####################################################################
@@ -172,12 +172,12 @@ talk_threads:
           border-color: "#bb0"
           background-color: "#ff0"
           box-shadow-color: "#bb0"
-    teahouse invitation: #######################################################
-      expression: "Template:teahouse"
+    project chat invitation: #######################################################
+      expression: "Template:project chat"
       groups: [] # No groups in the expression
       icon:
         label: TH
-        tooltip: Teahouse invitation
+        tooltip: Project chat invitation
         style:
           border-color: "#6d6"
           background-color: "#9f9"
@@ -225,7 +225,7 @@ talk_threads:
 user_actions:
   display:
     - send message
-    - invite to teahouse
+    - invite to project chat
     - report abuse
   actions:
     send message:
@@ -247,15 +247,15 @@ user_actions:
           label: Message
           type: textarea
           tooltip: the body of the message
-          default: {{subst:Welcome}} --~~~~
+          default: {{subst:Wikidata:Snuggle/Message}} --~~~~
       operations:
         - #Appends the message to the user's talk page
           type: append
           page_name: "User_talk:%(user_name)s"
           markup: "{{subst:Wikidata:Snuggle/User_message|header=%(header)s|message=%(message)s}}"
           comment: "New message: %(header)s"
-    invite to teahouse:
-      label: invite to teahouse
+    invite to project chat:
+      label: invite to project chat
       description: >
         Posts an invitation to the [[WD:Project chat]] on 
         [[User:%(user_name)s|%(user_name)s]]'s 
@@ -267,22 +267,22 @@ user_actions:
           label: Template
           type: radio
           tooltip: the template to be used for the invitation.
-          default: :Wikidata:Teahouse/Invitation
+          default: :Wikidata:Snuggle/Invitation
           options:
             - # Standard invitation
               label: Invitation
-              value: :Wikidata:Teahouse/Invitation
+              value: :Wikidata:Snuggle/Invitation
               tooltip: The standard invitation template.
             - # Optional other invitiation style
               label: Invitation2
-              value: :Wikidata:Teahouse/Invitation2
+              value: :Wikidata:Snuggle/Invitation2
               tooltip: An alternative invitation template.
         - # header
           name: header
           label: Header
           type: text
           tooltip: a header for the message
-          default: "You're invited to the [[WD:Project chat|Teahouse]]."
+          default: "You're invited to the [[WD:Project chat|project chat]]."
         - # message
           name: message
           label: Message
@@ -298,7 +298,7 @@ user_actions:
       label: report abuse
       description: >
         Reports vandals and spammers to admins via the 
-        [[WD:AN|Administrator's notice board]]. Use only for
+        [[WD:AN|Administrators' notice board]]. Use only for
         <b>obvious</b> and <b>persistent</b> cases. Please review
         [[WD:Spam]] and [[WD:Vandalism]].
       summary: "%(snuggler)s reported %(user)s to administrators"
@@ -311,7 +311,7 @@ user_actions:
       operations:
         - # Appends a list item to the bottom of AIV
           type: append
-          page_name: Administrators%27_noticeboard
+          page_name: Administrators'_noticeboard
           markup: "* {{Vandal|%(user_name)s}} %(reason)s ~~~~"
           comment: "Reporting [[User:%(user_name)s]] for %(reason)s"
 
