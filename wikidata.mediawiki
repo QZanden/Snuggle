@@ -1,20 +1,20 @@
 Copied it from https://github.com/halfak/snuggle/blob/master/config/enwiki.mediawiki.yaml
 
-last_updated: "May 11th, 2013"
+last_updated: "May 26, 2017"
 author: 
-  name: Aaron Halfaker
-  email: aaron.halfaker@gmail.com
-  url: http://halfaker.info
+  name: Quinten van der Zanden
+  email: quintenvanderzanden@gmail.com
+  url: https://www.wikidata.org/wiki/User:QZanden
 
 # The name of the MediaWiki installation we're running against.
-name: English Wikipedia
+name: Wikidata
 
 # The protocol to use when linking to the MediaWiki web interface.  'https' is 
 # preferred if possible. 
 protocol: https
 
 # The base domain for the MediaWiki installation.
-domain: en.wikipedia.org
+domain: wikidata.org
 
 # The path to wiki pages and scripts on the server.  This is used for making API
 # requests and for linking back to the wiki from the the user interface.
@@ -25,21 +25,21 @@ file:
   index: index.php
   api: api.php
 
-# Parameters for making requests to the API.  Wikipedia's API requires that a 
+# Parameters for making requests to the API.  Wikidata's API requires that a 
 # header be provided with all requests that identifies the originator of the 
 # request.
 requests:
   headers:
-    User-Agent: "Snuggle system (see [[WP:Snuggle]])"
+    User-Agent: "Snuggle system (see [[:d:WD:Snuggle]])"
 
 # String to append at the end of comments for all page edit actions performed.
-# This is useful for directing other Wikipedians to Snuggle and for tracking 
+# This is useful for directing other Wikidatans to Snuggle and for tracking 
 # the use of Snuggle across the history of edits in the wiki.
-comment_suffix: " ([[:en:WP:Snuggle|Sn]])"
+comment_suffix: " ([[:d:WD:Snuggle|Snuggle]])"
 
 
 # Thread traces are how socially relevant actions are recorded.  Historically,
-# the traces of actions relevant to a user and their behavior in Wikipedia have
+# the traces of actions relevant to a user and their behavior in Wikidata have
 # been captured on their talk page.  This section specifies a set of traces that 
 # Snuggle will identify and present in the intergace.  Each "trace" specifies a 
 # regular expression intended to match the pattern of text that identifies a 
@@ -74,7 +74,7 @@ talk_threads:
     - deletion notification
     - csd notification
     - articles for creation
-    - teahouse invitation
+    - project chat invitation
     - welcome message
   traces:
     block: #####################################################################
@@ -172,12 +172,12 @@ talk_threads:
           border-color: "#bb0"
           background-color: "#ff0"
           box-shadow-color: "#bb0"
-    teahouse invitation: #######################################################
-      expression: "Template:teahouse"
+    project chat invitation: #######################################################
+      expression: "Template:project chat"
       groups: [] # No groups in the expression
       icon:
         label: TH
-        tooltip: Teahouse invitation
+        tooltip: Project chat invitation
         style:
           border-color: "#6d6"
           background-color: "#9f9"
@@ -199,7 +199,7 @@ talk_threads:
 # page.  The order in which they are listed will determine how they appear in
 # the user interface.
 #
-#display: Specifies which actions to display in the user interface.  Removing a
+#display: Specifies which actions to display in the user interface.  Removing
 #         an action name from this list will effectively disable the action.
 #actions: 
 #   name: The name to be used for this field.  This will be used as a label in 
@@ -225,14 +225,14 @@ talk_threads:
 user_actions:
   display:
     - send message
-    - invite to teahouse
+    - invite to project chat
     - report abuse
   actions:
     send message:
       label: send message
       description: >
         Posts a new message on 
-        [[User:%(user_name)s|%(user_name)s]]'s 
+        [[User:%(user_name)s|]]'s 
         [[User_talk:%(user_name)s|talk page]].
       summary: "%(snuggler)s sent a message to %(user)s"
       fields:
@@ -247,41 +247,42 @@ user_actions:
           label: Message
           type: textarea
           tooltip: the body of the message
+          default: {{subst:Wikidata:Snuggle/Message}} --~~~~
       operations:
         - #Appends the message to the user's talk page
           type: append
           page_name: "User_talk:%(user_name)s"
-          markup: "{{subst:Wikipedia:Snuggle/User_message|header=%(header)s|message=%(message)s}}"
+          markup: "{{subst:Wikidata:Snuggle/User_message|header=%(header)s|message=%(message)s}}"
           comment: "New message: %(header)s"
-    invite to teahouse:
-      label: invite to teahouse
+    invite to project chat:
+      label: invite to project chat
       description: >
-        Posts an invitation to the [[WP:Teahouse]] on 
+        Posts an invitation to the [[WD:Project chat]] on 
         [[User:%(user_name)s|%(user_name)s]]'s 
         [[User_talk:%(user_name)s|talk page]].
-      summary: "%(snuggler)s invited %(user)s to the teahouse"
+      summary: "%(snuggler)s invited %(user)s to the project chat"
       fields:
         - # template
           name: template
           label: Template
           type: radio
           tooltip: the template to be used for the invitation.
-          default: :Wikipedia:Teahouse/Invitation
+          default: :Wikidata:Snuggle/Invitation
           options:
             - # Standard invitation
               label: Invitation
-              value: :Wikipedia:Teahouse/Invitation
+              value: :Wikidata:Snuggle/Invitation
               tooltip: The standard invitation template.
             - # Optional other invitiation style
               label: Invitation2
-              value: :Wikipedia:Teahouse/Invitation2
+              value: :Wikidata:Snuggle/Invitation2
               tooltip: An alternative invitation template.
         - # header
           name: header
           label: Header
           type: text
           tooltip: a header for the message
-          default: "You're invited to the [[WP:Teahouse|Teahouse]]."
+          default: "You're invited to the [[WD:Project chat|project chat]]."
         - # message
           name: message
           label: Message
@@ -297,9 +298,9 @@ user_actions:
       label: report abuse
       description: >
         Reports vandals and spammers to admins via the 
-        [[WP:AIV|Administrator's notice board]]. Use only for
+        [[WD:AN|Administrators' notice board]]. Use only for
         <b>obvious</b> and <b>persistent</b> cases. Please review
-        [[WP:Spam]], [[WP:Vandaism]] and the [[AIV Guide]].
+        [[WD:Spam]] and [[WD:Vandalism]].
       summary: "%(snuggler)s reported %(user)s to administrators"
       fields:
         - # reason
@@ -310,12 +311,12 @@ user_actions:
       operations:
         - # Appends a list item to the bottom of AIV
           type: append
-          page_name: Wikipedia:Administrator_intervention_against_vandalism
+          page_name: Administrators'_noticeboard
           markup: "* {{Vandal|%(user_name)s}} %(reason)s ~~~~"
           comment: "Reporting [[User:%(user_name)s]] for %(reason)s"
 
 # Namespaces are configurable for MediaWiki installations.  This datastructure
-# describes the configuration of the English Wikipedia.  Note that the Main 
+# describes the configuration of Wikidata.  Note that the Main 
 # namespace has an empty prefix
 namespaces:
   -2:
@@ -327,7 +328,7 @@ namespaces:
     prefixes:
       - "Special:"
   0:
-    name: Articles
+    name: Items
     prefixes:
       - ""
   1:
@@ -343,15 +344,15 @@ namespaces:
     prefixes:
       - "User_talk:"
   4:
-    name: Wikipedia
+    name: Wikidata
     prefixes:
-      - "Wikipedia:"
+      - "Wikidata:"
       - "Project:"
-      - "WP:"
+      - "WD:"
   5:
-    name: Wikipedia_talk
+    name: Wikidata_talk
     prefixes:
-      - "Wikipedia_talk:"
+      - "Wikipdata_talk:"
       - "Project_talk:"
       - "WT:"
   6:
@@ -368,10 +369,12 @@ namespaces:
     name: Mediawiki
     prefixes:
       - "Mediawiki:"
+      - "MediaWiki:"
   9:
     name: Mediawiki_talk
     prefixes:
       - "Mediawiki_talk:"
+      - "MediaWiki_talk:"
   10:
     name: Template
     prefixes:
